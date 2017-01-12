@@ -29,6 +29,15 @@ ido=Player(name="ido",
 	defense=8,
 	)
 
+#session.add(team1)
+#session.add(amos)
+#session.add(ido)
+
+ido.coach_id=amos
+team1.coach_ic=amos
+
+
+#ido.player_teams.append(team1)
 
 
 
