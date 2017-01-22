@@ -23,7 +23,7 @@ def login():
 		if email=="" or password == "":
 			flash("missing arguments")
 			return redirect(url_for('login'))
-		coach=session.query(Coach).filter_by(email=email).one()
+		coach=session.query(Coach).filter_by(email=email).first()
 		if coach.password==password:
 			flash('Login successfuly, welcme, %s' % coach.name)
 			login_session['email']=coach.email
