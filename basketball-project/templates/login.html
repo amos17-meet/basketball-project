@@ -6,6 +6,21 @@
 <body>
 <h1>LogIn here</h1>
 
+<div class = 'flash'>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+</div>
+
+
 <form action="{{ url_for('login') }}" method='post'>
 	Email Address:<br>
 	<input type="email" name="email"><br>

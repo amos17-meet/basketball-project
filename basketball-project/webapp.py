@@ -24,16 +24,21 @@ def login():
 			flash("missing arguments")
 			return redirect(url_for('login'))
 		coach=session.query(Coach).filter_by(email=email).first()
-		if coach.password==password:
-			flash('Login successfuly, welcme, %s' % coach.name)
-			login_session['email']=coach.email
-			login_session['name']=coach.name
-			login_session['id']=coach.id
-			print ("hereee")
-			return redirect('build_starting_5')
+		if coach!=None:
+			if coach.password==password:
+				flash('Login successfuly, welcme, %s' % coach.name)
+				login_session['email']=coach.email
+				login_session['name']=coach.name
+				login_session['id']=coach.id
+				print ("hereee")
+				return redirect('build_starting_5')
+			else:
+				flash('incorrect user/password')
+				return redirect(url_for('login.html'))
 		else:
-			flash('incorrect user/password')
-			return redirect(url_for('login.html'))
+			flash("Could not found such a coach")
+			return redirect(url_for('login'))
+			
 
 
 @app.route('/build_starting_5', methods = ['GET','POST'])
