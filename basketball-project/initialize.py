@@ -19,23 +19,23 @@ amos=Coach(name="amos",
 			password="123",
 			nickname="amosrottenberg")
 
-team1=Team (name="1")
+team1=Starting_5 (name="1")
 
 ido=Player(name="ido",
 	player_position=1,
-	three_point=40,
+	three_points=40,
 	two_points=50,
 	one_on_one=7,
 	defense=8,
 	)
+'''
+session.add(team1)
+session.add(amos)
+session.add(ido)
 
-#session.add(team1)
-#session.add(amos)
-#session.add(ido)
+amos.players.append(ido)
 
-ido.coach_id=amos
-team1.coach_ic=amos
-
+amos.starting_5s.append(team1)
 
 #ido.player_teams.append(team1)
 
@@ -46,4 +46,4 @@ team1.coach_ic=amos
 
 session.commit()
 			
-
+'''

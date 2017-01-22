@@ -12,34 +12,41 @@ class Coach(Base):
     email = Column(String)
     password = Column(String)
     nickname = Column(String)
-    teams=relationship("Team", back_populates="coach")
+    #players= relationship("Player")
+    starting_5s=relationship("Starting_5", back_populates="coach")
     players=relationship("Player", back_populates="coach")
+
+
+
 
 association_table = Table('association', Base.metadata,
     Column('player_id', Integer, ForeignKey('player.id')),
-    Column('team_name', Integer, ForeignKey('team.name')))
+    Column('starting_5_name', Integer, ForeignKey('starting_5.name')))
+
+    
 
 
 class Player(Base):
     __tablename__ = 'player'
     id = Column(Integer, primary_key=True)
     name=Column(String)
+    #coach_id=Column(Integer, ForeignKey('coach.id'))
     coach_id = Column(Integer, ForeignKey("coach.id"))
     coach = relationship("Coach", back_populates="players")
-    player_teams=relationship("Team", secondary=association_table, back_populates="players")
-    player_position= Column(Integer)
-    three_point = Column(Integer)
-    two_points = Column(Integer)
-    one_on_one = Column(Integer)
-    defense = Column(Integer)
+    player_starting_5s=relationship("Starting_5", secondary=association_table, back_populates="players")
+    player_position= Column(String)
+    three_points = Column(String)
+    two_points = Column(String)
+    one_on_one = Column(String)
+    defense = Column(String)
 
 
-class Team(Base):
-    __tablename__ = 'team'
+class Starting_5(Base):
+    __tablename__ = 'starting_5'
     id = Column (Integer, primary_key=True)
     coach_id = Column(Integer, ForeignKey("coach.id"))
-    coach = relationship("Coach", back_populates="teams")
+    coach = relationship("Coach", back_populates="starting_5s")
     name = Column(String)
-    players =relationship("Player", secondary=association_table, back_populates="player_teams")
+    players =relationship("Player", secondary=association_table, back_populates="player_starting_5s")
 
 
