@@ -28,7 +28,7 @@ ido=Player(name="ido",
 	one_on_one=7,
 	defense=8,
 	)
-'''
+
 session.add(team1)
 session.add(amos)
 session.add(ido)
@@ -36,6 +36,8 @@ session.add(ido)
 amos.players.append(ido)
 
 amos.starting_5s.append(team1)
+
+ido.player_starting_5s.append(team1)
 
 #ido.player_teams.append(team1)
 
@@ -46,4 +48,4 @@ amos.starting_5s.append(team1)
 
 session.commit()
 			
-'''
+

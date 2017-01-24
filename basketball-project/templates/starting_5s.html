@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>build</title>
+	<title>starting_5s</title>
 </head>
 <body>
-<h1>build starting 5</h1>
-
+<h1> My Starting 5 </h1>
 
 <div class = 'flash'>
     {% with messages = get_flashed_messages() %}
@@ -21,9 +20,18 @@
 
 </div>
 
-
-<a href="{{ url_for('create_player') }}" value=Cancel class="btn btn-info">Create Player</a>
-<br>
-<a href="{{ url_for('starting_5s') }}" value=Cancel class="btn btn-info">My starting 5</a>
+<div class="container-fluid">
+	<div>
+		{%for starting_5 in starting_5s %}
+			<tr>
+				{%for player in starting_5.players%}
+					<tr>
+						<p>{{player.name}}</p>
+					</tr>
+				{%endfor%}
+			</tr>
+		{%endfor%}	
+	</div>
+</div>
 </body>
 </html>

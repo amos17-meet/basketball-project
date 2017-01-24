@@ -43,8 +43,12 @@ def login():
 
 @app.route('/build_starting_5', methods = ['GET','POST'])
 def build_starting_5():
-	if request.method=='GET':
-		return render_template("build_starting_5.html")
+	if 'email' in login_session:
+		coach=session.query(Coach).filter_by(email=login_session['email']).first()
+		if request.method=='GET':
+			return render_template("build_starting_5.html")
+
+	return redirect(url_for('login'))
 
 
 
@@ -76,38 +80,53 @@ def signup():
 
 @app.route('/create_player', methods=['GET','POST'])
 def create_player():
-	if request.method=='GET':
-		return render_template('create_player.html')
-	else:
-		print("name")
-		name=request.form['name']
-		print("position")
-		player_position=request.form['position']
-		print("two")
-		two_points=request.form['two_points']
-		print("three")
-		three_points=request.form['three_points']
-		print("one")
-		one_on_one=request.form['one_on_one']
-		print("def")
-		defense=request.form['defense']
-
-		if name=="" or player_position=="" or two_points=="" or three_points=="" or one_on_one=="" or defense=="":
-			flash("missing arguments")
-			return redirect(url_for('create_player'))
+	if 'email' in login_session:
+		coach=session.query(Coach).filter_by(email=login_session['email']).first()
+		if request.method=='GET':
+			return render_template('create_player.html')
 		else:
-			new_player= Player(name=name,
-								player_position=player_position,
-								two_points=two_points,
-								three_points=three_points,
-								one_on_one=one_on_one,
-								defense=defense)
-			session.add(new_player)
-			session.commit()
-			return redirect('build_starting_5')
+			print("name")
+			name=request.form['name']
+			print("position")
+			player_position=request.form['position']
+			print("two")
+			two_points=request.form['two_points']
+			print("three")
+			three_points=request.form['three_points']
+			print("one")
+			one_on_one=request.form['one_on_one']
+			print("def")
+			defense=request.form['defense']
 
+			if name=="" or player_position=="" or two_points=="" or three_points=="" or one_on_one=="" or defense=="":
+				flash("missing arguments")
+				return redirect(url_for('create_player'))
+			else:
+				new_player= Player(name=name,
+									player_position=player_position,
+									two_points=two_points,
+									three_points=three_points,
+									one_on_one=one_on_one,
+									defense=defense)
+				session.add(new_player)
+				coach.players.append(new_player)
+				session.commit()
+				return redirect('build_starting_5')
+	return redirect(url_for('login'))
+
+
+@app.route('/starting_5s', methods=['GET','POST'])
+def starting_5s():
 	
+	print('email' in login_session)
+	if 'email' in login_session:
+		print("hereeee")
+		coach=session.query(Coach).filter_by(email=login_session['email']).first()
+		starting_5s = coach.starting_5s
+		print(starting_5s)
+		return render_template('starting_5s.html',starting_5s=starting_5s)
 
+	return redirect(url_for('login'))
 
 
 
